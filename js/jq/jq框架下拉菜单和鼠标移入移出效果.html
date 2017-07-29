@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		ul{
+			list-style: none;
+			position: absolute;
+			padding: 0;
+			border-radius: 10px;
+			border: 1px solid black;
+			background:rgba(0,0,0,0.5);
+		}
+		.licss{
+			padding: 0 30px;
+			display: block;
+			font: bold 16px/40px "宋体";
+			color: white;
+		}
+	</style>
+</head>
+<body>
+	<ul id="context"></ul>
+</body>
+    <script src="jquery-3.2.1.min.js"></script>
+<script>
+	data=[
+		{
+			name:"新建",
+			children:[
+				{
+					name:"新建文件夹",
+				},
+				{
+					name:"新建文档个",
+				}
+			]
+		},
+		{
+			name:"刷新",
+		},
+		{
+			name :"排序",
+			children:[
+				{
+					name:"按时间排序",
+					children:[
+						{
+							name:"正序"
+						},
+						{
+							name:"倒序"
+						}
+					]
+				},
+				{
+					name:"按文件名排序",
+					children:[
+						{
+							name:"正序"
+						},
+						{
+							name:"倒序"
+						}
+					]
+				}
+			]
+		}
+	]	
+	function view(data,list){
+		data.forEach(function(eltm){
+			var li=document.createElement("li");
+				li.innerHTML=eltm.name;
+				li.addEventListener("mouseover",function (e){
+					e.stopPropagation();
+					e.preventDefault();
+					var allli=li.parentNode.children;
+					if(!li.children.length){
+					for (var i = 0; i < allli.length; i++) {
+						var ul=allli[i].querySelector("ul");
+						if(ul){
+							allli[i].removeChild(ul);
+						}
+					};
+						if(eltm.children){
+						var ul=document.createElement("ul")
+						view(eltm.children,ul);
+						li.appendChild(ul)
+					};
+					}
+				});
+			list.appendChild(li)
+		})
+	};
+	view(data,context);
+	var li=$("#context li")
+	li.addClass("licss");
+	console.log($('document').children)
+$(document).on('click',function(){
+		alert(1)
+	})
+	
+
+	
+	
+</script>
+</html>
+
+
+
+
+
+
+
+
+
+
